@@ -6,11 +6,12 @@ const cors = require("cors");
 const { Client } = require("pg");
 const client = new Client();
 client.connect();
-const userPsqlRepository = require("./users/repository/currencyPsqlRepository")(
-  client
+const userPsqlRepository =
+  require("./currencies/repository/currencyPsqlRepository")(client);
+const currencyService = require("./currencies/currencyService")(
+  userPsqlRepository
 );
-const currencyService = require("./users/currencyService")(userPsqlRepository);
-const { createUserRoutes } = require("./users/routes/currencyRoutes")(
+const { createUserRoutes } = require("./currencies/routes/currencyRoutes")(
   currencyService
 );
 const app = express();
